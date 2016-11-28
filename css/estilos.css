@@ -1,0 +1,15 @@
+label{
+    font-family: Roboto-Regular;
+}
+h3{
+    font-family: Roboto-Bold;
+}
+.error{
+    text-size: 20px;
+    text-transform:uppercase;
+    color:red;
+}
+
+.table-striped{
+    text-align: center;
+}
