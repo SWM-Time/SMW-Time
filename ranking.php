@@ -47,7 +47,7 @@
                         $rol = $resultado[0];
                         if($rol[0] == 1 || $rol[0] == 2){
                             echo '<li><a href="editarMarcas.php">Editar marcas</a></li>';
-                          }
+                        }
                         ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -58,7 +58,8 @@
             </div>
         </nav>
         <div class="container">
-           <form class="form-inline">
+            <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
+            <form class="form-inline" name="formulario" onsubmit="MostrarConsulta('consulta.php'); return false">
               <div class="form-group">
                         <label>Sexo:</label>
                         <select id='sexo' name='sexo' class="form-control">
@@ -85,14 +86,14 @@
            </form>
         <div id="marcas">
          <?php
-           $sexo = $_POST['sexo'];
+           /*$sexo = $_POST['sexo'];
            $prueba = $_POST['prueba'];
            if (isset($_POST['ver'])) {
              $ranking = $conexion->query("select * tiempos where idSexo=".$sexo." AND idPrueba=".$prueba);
              while ($registroRanking = $ranking->fetch()) {
                 echo "Nadador ->".$registroRanking['usuario']."Tiempo ->".$registroRanking['tiempo'];
              }
-           }
+           }*/
          ?>
         </div>
 
