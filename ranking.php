@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./css/fonts.css">
-        <!-- Versión compilada y comprimida del CSS de Bootstrap -->
+        <!-- VersiÃ³n compilada y comprimida del CSS de Bootstrap -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
        
@@ -58,11 +58,47 @@
             </div>
         </nav>
         <div class="container">
-
+           <form class="form-inline">
+              <div class="form-group">
+                        <label>Sexo:</label>
+                        <select id='sexo' name='sexo' class="form-control">
+                        <?php
+                        $sqlS = $conexion->query("select * from sexo ");
+                        while ($registroS = $sqlS->fetch()) {
+                            echo "<option value='".$registroS['idSexo']."'>".$registroS['sexo']."</option>";
+                        }
+                        ?>
+              </select>
+              <div class="form-group">
+                        <label>Prueba:</label>
+                        <select id='prueba' name='prueba' class="form-control">
+                        <?php
+                        $sqlP = $conexion->query("select * from pruebas");
+                        while ($registroP = $sqlP->fetch()) {
+                            echo "<option value='".$registroP['idPrueba']."'>".$registroP['prueba']."</option>";
+                        }
+                        ?>
+              </select>
+              <div class="form-group">
+              <input type="submit" value="Ver" id="ver" name="ver" class="btn btn-success">
+              </div>
+           </form>
+        <div id="marcas">
+         <?php
+           $sexo = $_POST['sexo'];
+           $prueba = $_POST['prueba'];
+           if (isset($_POST['ver'])) {
+             $ranking = $conexion->query("select * tiempos where idSexo=".$sexo." AND idPrueba=".$prueba);
+             while ($registroRanking = $ranking->fetch()) {
+                echo "Nadador ->".$registroRanking['usuario']."Tiempo ->".$registroRanking['tiempo'];
+             }
+           }
+         ?>
+        </div>
 
         </div>      
     </body>
- <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
+ <!-- VersiÃ³n compilada y comprimida del JavaScript de Bootstrap -->
         <script src="./js/jquery-3.1.1.min.js"></script>
         <script src="./bootstrap/js/bootstrap.min.js"></script>
-</html>
+</html>	

@@ -244,7 +244,7 @@ function convertir(form) {
         </div>
     
     <br />
-    <input name="button" class="btn-default" type ="button" onclick="convertir(this.form)" value="Convertir tiempo" />
+    <input name="button" class="btn btn-success" type ="button" onclick="convertir(this.form)" value="Convertir tiempo" />
     <br />
     <br />
    <h4>Tiempo convertido, según piscina y crono:</h4>
