@@ -25,6 +25,9 @@
         if (!isset($_SESSION['usuario'])) {
             die("Error - debe <a href='index.php'>identificarse</a>.<br />");
         }
+        $resultadoUsuarios = $conexion->query("select idUsuario from usuarios where usuario='" . $_SESSION['usuario'] . "'");
+        $idUsuario = $resultadoUsuarios->fetch();
+        $foo = (int) $idUsuario[0];
         ?>
         <div class="container" id="header">
             <div class="row" id="logo">
@@ -88,7 +91,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idPiscina = 1 OR idPiscina = 2");
+                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idTipoPiscina = 1 OR idTipoPiscina = 2 AND idUsuario = ".$foo." ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = formatFecha($fecha, "/");
@@ -112,7 +115,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idPiscina = 3 OR idPiscina = 4");
+                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idTipoPiscina = 3 OR idTipoPiscina = 4 AND idUsuario = ".$foo." ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = formatFecha($fecha, "/");
