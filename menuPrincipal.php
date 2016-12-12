@@ -8,18 +8,14 @@
         <link rel="stylesheet" href="./css/estilos.css">
         <!-- VersiÃ³n compilada y comprimida del CSS de Bootstrap -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
-
-        <!--<style>
-            #logo{
-                background-image: url(imagenes/cabecera.JPG);
-            }
-        </style>-->
 
     </head>
     <body>
         <?php
         include_once 'conexion.php';
+        include 'utiles.php';
         session_start();
 
         if (!isset($_SESSION['usuario'])) {
@@ -29,20 +25,13 @@
         $idUsuario = $resultadoUsuarios->fetch();
         $foo = (int) $idUsuario[0];
         ?>
-        <div class="container" id="header">
-            <div class="row" id="logo">
-                <img src="imagenes/logos/crono_48.png">
-            </div>
-        </div>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <a class="navbar-brand" href="menuPrincipal.php">SMW-TIME</a>
+                    <img alt="SWM-TIME" src="imagenes/logos/crono_48.png" alt="SWM-TIME">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -55,7 +44,7 @@
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
                         if ($rol[0] == 1 || $rol[0] == 2) {
-                            echo '<li><a href="editarMarcas.php">Editar marcas</a></li>';
+                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
                         }
                         ?>
 
@@ -67,19 +56,6 @@
                 </div>
             </div>
         </nav>
-        <?php
-
-        function formatFecha($datetime, $sep = '/') {
-            $dia = substr($datetime, 8, 2);
-            $mes = substr($datetime, 5, 2);
-            $ano = substr($datetime, 0, 4);
-            if ($dia && $mes && $ano) {
-                return $dia . $sep . $mes . $sep . $ano;
-            } else {
-                return null;
-            }
-        }
-        ?>
         <div class="container">
             <table class="table table-striped">
                 <thead>
@@ -91,13 +67,13 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idTipoPiscina = 1 OR idTipoPiscina = 2 AND idUsuario = ".$foo." ORDER BY pruebas.idPrueba ASC");
+                    $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND idTipoPiscina = 1 OR idTipoPiscina = 2  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
-                        $fechaBuena = formatFecha($fecha, "/");
+                        $fechaBuena = utiles::formatFecha($fecha, "/");
                         echo '<tr>';
                         echo '<td>' . $registro["prueba"] . '</td>';
-                        echo '<td>' . substr($registro["tiempo"], 3, 10) . '</td>';
+                        echo '<td>' . substr($registro["min_tiempo"], 3, 10) . '</td>';
                         echo '<td>' . $fechaBuena . '</td>';
                         echo '</tr>';
                     }
@@ -118,7 +94,7 @@
                     $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idTipoPiscina = 3 OR idTipoPiscina = 4 AND idUsuario = ".$foo." ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
-                        $fechaBuena = formatFecha($fecha, "/");
+                        $fechaBuena = utiles::formatFecha($fecha, "/");
                         echo '<tr>';
                         echo '<td>' . $registro["prueba"] . '</td>';
                         echo '<td>' . substr($registro["tiempo"], 3, 10) . '</td>';
@@ -128,10 +104,6 @@
                     ?>
                 </tbody>
             </table>
-
-            <!--<form method="post">
-                <input type="submit" value="Exportar a PDF" id="generarPDF" name="generarPDF" class="btn btn-success">            
-            </form>-->
         </div>
 
 

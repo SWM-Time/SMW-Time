@@ -6,40 +6,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./css/fonts.css">
         <link rel="stylesheet" href="./css/estilos.css">
+        <link rel="stylesheet" href="css/datedropper.css">
         <!-- Versión compilada y comprimida del CSS de Bootstrap -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
         <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
         <script src="./js/jquery-3.1.1.min.js"></script>
-        <script src="./bootstrap/js/bootstrap.min.js"></script>
+        <script src="./bootstrap/js/bootstrap.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="js/datedropper.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         
     </head>
     <body>
         <?php
-            include_once 'conexion.php';    
+            include_once 'conexion.php';
+            include 'DB.php';
             session_start();
             
             if (!isset($_SESSION['usuario'])) {
             die("Error - debe <a href='index.php'>identificarse</a>.<br />");
         }
         ?>
-        <div class="container" id="header">
-            <div class="row" id="logo">
-                <img src="imagenes/logos/crono_48.png">
-            </div>
-        </div>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <a class="navbar-brand" href="menuPrincipal.php">SMW-TIME</a>
+                    <img alt="SWM-TIME" src="imagenes/logos/crono_48.png">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -64,13 +61,12 @@
             </div>
         </nav>
         <div class="container">
-            
-            
+            <div class="row">
              <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Añadir usuarios</button>
              <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalP">Añadir piscina</button>
              <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalM">Añadir marca</button>
              <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalU">Listado usuarios</button>
-            
+            </div>
             <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
@@ -130,7 +126,8 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha de nacimiento</label>
-                        <input type="text" id="fnac" name="fnac" class="form-control">
+                        <input type="text" id="fnac" name="fnac" class="form-control"/>
+                        <script>$( "#fnac" ).dateDropper();</script>
                     </div>
                     <div class="form-group">
                         <label>Categoría:</label>
@@ -185,7 +182,8 @@
                         <input type="text" id="piscina" name="piscina" class="form-control">
                     </div>
                   </br>
-                    <input type="submit" class="btn btn-success" value="Añadir">
+                  <input type="submit" class="btn btn-success" value="Añadir" id="anadirPiscina">
+
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               </form>
               </div>
@@ -270,18 +268,8 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha</label>
-                        <!--<input type="text" id="fecha" name="fecha" class="form-control">
-                        <script>
-                          
-                        $( function() {
-                           $( "#fecha" ).datepicker();
-                        } );
-
-                        </script>-->
-                        <input class="datepicker" data-date-format="mm/dd/yyyy">
-                        <script>
-                         $('.datepicker').datepicker();
-                        </script>
+                        <input type="text" id="fechaMarca" name="fechaMarca" class="form-control"/>
+                        <script>$( "#fechaMarca" ).dateDropper();</script>
                     
                     </div>
                     <input type="submit" class="btn btn-success" value="Añadir">
@@ -319,16 +307,57 @@
 <br /><br /><br />
 
 <script>
+
+//var respuestas=$.ajax('cargarDatatable.php');
 $(document).ready(function() {
-    $('#editarMarcas').DataTable({
-"language": {
-            "lengthMenu": "Mostrando _MENU_ resultados por p�gina",
-            "zeroRecords": "No existen resultados",
-            "info": "Mostrando p�gina _PAGE_ de _PAGES_",
-            "infoEmpty": "No hay resultados disponibles"
+    var table =$('#editarMarcas').DataTable( {
+        'ajax':{'url':'cargarDatatable.php'
+                
+        },
+        "columns": [
+            { "data": "usuario" },
+            { "data": "prueba" },
+            { "data": "marca" },
+            { "data": "fecha" },
+            { "data": "tipo_piscina" },
+            { "data": "piscina" },
+            { "defaultContent": "<button class='btn btn-info'>Editar</button>"}
+        ],
+        
+        "language": {
+            "sProcessing":     "Procesando...",
+            "sLengthMenu":     "Mostrar _MENU_ registros",
+            "sZeroRecords":    "No se encontraron resultados",
+            "sEmptyTable":     "Ningún dato disponible en esta tabla",
+            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix":    "",
+            "sSearch":         "Buscar:",
+            "sUrl":            "",
+            "sInfoThousands":  ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst":    "Primero",
+                "sLast":     "Último",
+                "sNext":     "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
         }
-});
+    } );
+    $('#editarMarcas tbody').on( 'click', 'button', function () {
+         var data = table.row( $(this).parents('tr') ).data();
+            alert( data[0] );
+        //https://datatables.net/examples/ajax/null_data_source.html
+        //alert( "click!" );
+        } );
 } );
+
+
 </script>
 <table id="editarMarcas" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
@@ -339,20 +368,10 @@ $(document).ready(function() {
                 <th>Fecha</th>
                 <th>Tipo Piscina</th>
                 <th>Piscina</th>
-                <th>Temporada</th>
+                <th>Editar</th>
             </tr>
         </thead>
-<tbody>
-            <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-                <td>$320,800</td>
-            </tr>
-</tbody>
+
     </table>
 
 
@@ -360,4 +379,4 @@ $(document).ready(function() {
       </div>
     </body>
 
-</html>							
+</html>					

@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="./css/fonts.css">
         <!-- Versión compilada y comprimida del CSS de Bootstrap -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
         
     </head>
@@ -19,20 +20,13 @@
             die("Error - debe <a href='index.php'>identificarse</a>.<br />");
         }
         ?>
-        <div class="container" id="header">
-            <div class="row" id="logo">
-                <img src="imagenes/logos/crono_48.png">
-            </div>
-        </div>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <a class="navbar-brand" href="menuPrincipal.php">SMW-TIME</a>
+                    <img alt="SWM-TIME" src="imagenes/logos/crono_48.png">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -45,7 +39,7 @@
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
                         if($rol[0] == 1 || $rol[0] == 2){
-                            echo '<li><a href="editarMarcas.php">Editar marcas</a></li>';
+                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
                           }
                         ?>
                     </ul>

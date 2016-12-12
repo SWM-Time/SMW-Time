@@ -7,7 +7,12 @@
         <link rel="stylesheet" href="./css/fonts.css">
         <!-- VersiÃ³n compilada y comprimida del CSS de Bootstrap -->
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+         <!-- VersiÃ³n compilada y comprimida del JavaScript de Bootstrap -->
+        <script src="./js/jquery-3.1.1.min.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
+
        
         
     </head>
@@ -20,20 +25,13 @@
             die("Error - debe <a href='index.php'>identificarse</a>.<br />");
         }
         ?>
-        <div class="container" id="header">
-            <div class="row" id="logo">
-                <img src="imagenes/logos/crono_48.png">
-            </div>
-        </div>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
+                        <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <a class="navbar-brand" href="menuPrincipal.php">SMW-TIME</a>
+                    <img alt="SWM-TIME" src="imagenes/logos/crono_48.png">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -46,7 +44,7 @@
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
                         if($rol[0] == 1 || $rol[0] == 2){
-                            echo '<li><a href="editarMarcas.php">Editar marcas</a></li>';
+                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
                         }
                         ?>
                     </ul>
@@ -58,8 +56,34 @@
             </div>
         </nav>
         <div class="container">
-            <script language="JavaScript" type="text/javascript" src="js/ajax.js"></script>
-            <form class="form-inline" name="formulario" onsubmit="MostrarConsulta('consulta.php'); return false">
+            
+
+
+            <script>   
+                $(function(){
+                 $("#ver").click(function(){
+                 var url = "consulta.php"; // El script a dónde se realizará la petición.
+                    $.ajax({
+                           type: "POST",
+                           url: url,
+                           data: $("#formulario").serialize(), // Adjuntar los campos del formulario enviado.
+                           success: function(data)
+                           {
+                               $("#marcas").html(data); // Mostrar la respuestas del script PHP.
+                           }
+                         });
+
+                    return false; // Evitar ejecutar el submit del formulario.
+                 });
+                });
+                </script>
+
+
+
+
+
+            <!--<form class="form-inline" name="formulario" onsubmit="MostrarConsulta('consulta.php'); return false">-->
+            <form class="form-inline" method="post" id="formulario">
               <div class="form-group">
                         <label>Sexo:</label>
                         <select id='sexo' name='sexo' class="form-control">
@@ -70,6 +94,7 @@
                         }
                         ?>
               </select>
+              </div>
               <div class="form-group">
                         <label>Prueba:</label>
                         <select id='prueba' name='prueba' class="form-control">
@@ -80,26 +105,23 @@
                         }
                         ?>
               </select>
+              </div>
+                <div class="form-group">
+                        <label>Piscina:</label>
+                        <select id='piscina' name='piscina' class="form-control">
+                            <option value="1">25</option>
+                            <option value="2">50</option>
+                        </select>
+              </div>
               <div class="form-group">
-              <input type="submit" value="Ver" id="ver" name="ver" class="btn btn-success">
+              <input type="button" value="Ver" id="ver" name="ver" class="btn btn-success">
               </div>
            </form>
         <div id="marcas">
-         <?php
-           /*$sexo = $_POST['sexo'];
-           $prueba = $_POST['prueba'];
-           if (isset($_POST['ver'])) {
-             $ranking = $conexion->query("select * tiempos where idSexo=".$sexo." AND idPrueba=".$prueba);
-             while ($registroRanking = $ranking->fetch()) {
-                echo "Nadador ->".$registroRanking['usuario']."Tiempo ->".$registroRanking['tiempo'];
-             }
-           }*/
-         ?>
+         
         </div>
 
         </div>      
     </body>
- <!-- VersiÃ³n compilada y comprimida del JavaScript de Bootstrap -->
-        <script src="./js/jquery-3.1.1.min.js"></script>
-        <script src="./bootstrap/js/bootstrap.min.js"></script>
+
 </html>	

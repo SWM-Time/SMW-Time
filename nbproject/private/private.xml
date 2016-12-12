@@ -5,10 +5,13 @@
         <group>
             <file>file:/C:/xampp/htdocs/SMW-Time/menuPrincipal.php</file>
             <file>file:/C:/xampp/htdocs/SMW-Time/consulta.php</file>
+            <file>file:/C:/xampp/htdocs/SMW-Time/utiles.php</file>
+            <file>file:/C:/xampp/htdocs/SMW-Time/index.php</file>
+            <file>file:/C:/xampp/htdocs/SMW-Time/cargarDatatable.php</file>
+            <file>file:/C:/xampp/htdocs/SMW-Time/DB.php</file>
             <file>file:/C:/xampp/htdocs/SMW-Time/ranking.php</file>
-            <file>file:/C:/xampp/htdocs/SMW-Time/js/ajax.js</file>
-            <file>file:/C:/xampp/htdocs/SMW-Time/conversor.php</file>
             <file>file:/C:/xampp/htdocs/SMW-Time/editarMarcas.php</file>
+            <file>file:/C:/xampp/htdocs/SMW-Time/anadirPiscina.php</file>
         </group>
     </open-files>
 </project-private>

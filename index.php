@@ -7,7 +7,8 @@
         <link rel="stylesheet" href="./css/fonts.css">
         <link rel="stylesheet" href="./css/estilos.css">
         <!-- Versión compilada y comprimida del CSS de Bootstrap -->
-        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">        
+        <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">  
+        <link rel="stylesheet" href="css/lumen.css">
         
     </head>
     <body>
@@ -23,8 +24,7 @@
                 } else {
                     $login = $conexion->prepare("select * from usuarios where usuario=? AND pass=?");
                     $login->bindParam(1, $usuario);
-                    //$login->bindParam(2, MD5($pass)); b48315d52b88d4013a2b5bf1be8f40d1
-                    $login->bindParam(2,Md5($pass));
+                    $login->bindParam(2,md5($pass));
                     $login->execute();
                     if ($login = $login->fetch()) {
                         session_start();

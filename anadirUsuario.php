@@ -1,6 +1,7 @@
 <?php
 
 include_once 'conexion.php';
+include 'utiles.php';
 session_start();
 
 if (!isset($_SESSION['usuario'])) {
@@ -13,7 +14,7 @@ $nombre = $_POST['nombre'];
 $apellido1= $_POST['apellido1'];
 $apellido2= $_POST['apellido2'];
 $rol= $_POST['rol'];
-$fnac= $_POST['fnac'];
+$fnac= utiles::formatFechaDB($_POST['fnac']);
 $categoria = $_POST['categoria'];
 $sexo= $_POST['sexo'];
 $email= $_POST['email'];

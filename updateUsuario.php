@@ -16,10 +16,9 @@ $fnac= $_POST['fnac'];
 $email= $_POST['email'];
 
 
-
 $consulta = $conexion->prepare("UPDATE usuarios SET"
-        . "'usuario'= :usuario, 'pass'= :pass, 'nombre'= :nombre, 'apellido1'= :apellido1"
-        . ", 'apellido2'= :apellido2, 'fnac'= :fnac, 'email'= :email");
+        . " usuario= :usuario, pass= :pass, nombre= :nombre, apellido1= :apellido1 "
+        . ", apellido2= :apellido2, fnac= :fnac, email= :email WHERE usuario= :usuario");
 $consulta->bindParam(":usuario", $usuario );
 $consulta->bindParam(":pass", md5($pass) );
 $consulta->bindParam(":nombre", $nombre);
