@@ -13,7 +13,7 @@
     </head>
     <body>
         <?php
-            include_once 'conexion.php';    
+            include_once 'Consultas/conexion.php';    
             session_start();
             
             if (!isset($_SESSION['usuario'])) {
@@ -30,7 +30,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="menuPrincipal.php">Mis tiempos</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="menuPrincipal.php">Marcas<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="menuPrincipal.php">Mejores marcas</a></li>
+                                <li><a href="misMarcas.php">Mis marcas</a></li>
+                            </ul>
+                        </li>
                         <li><a href="ranking.php">Ranking</a></li>
                         <li><a href="conversor.php">Conversor</a></li>
                         <li class="active"><a href="convocatorias.php">Convocatorias</a></li>
@@ -45,7 +50,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="perfilUsuario.php"><span class="glyphicon glyphicon-user"></span> Hola <?php echo $_SESSION['usuario'];?></a></li>
-                        <li><a href="logout.php" id="cerrarSesion"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        <li><a href="Consultas/logout.php" id="cerrarSesion"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                     </ul>
                 </div>
             </div>
@@ -74,7 +79,7 @@
                 <h4 class="modal-title">Añadir convocatoria</h4>
               </div>
               <div class="modal-body">
-                  <form method="post" enctype="multipart/form-data" action="guardarConvocatoria.php">
+                  <form method="post" enctype="multipart/form-data" action="Consultas/guardarConvocatoria.php">
                     <div class="form-group">
                         <label>Convocatoria:</label><input name="convocatoria" type="file">
                     </div>
@@ -142,20 +147,6 @@
                         ?>
                         </select>
                     </div>
-                      
-                  
-                <?php
-                /*$directorio = "Convocatorias/"; 
-                $directorio = $directorio . basename( $_FILES['convocatoria']['name']); 
-                if(move_uploaded_file($_FILES['convocatoria']['tmp_name'], $directorio)) 
-                { 
-                echo "El archivo ". basename( $_FILES['convocatoria']['name'])." ha sido subido exitosamente!"; 
-                } 
-                else
-                { 
-                echo "Hubo un error al subir tu archivo! Por favor intenta de nuevo."; 
-                }*/
-                ?>
                       </br>
                       <input type="submit" class="btn btn-success" value="Añadir">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

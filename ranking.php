@@ -18,7 +18,7 @@
     </head>
     <body>
         <?php
-            include_once 'conexion.php';    
+            include_once 'Consultas/conexion.php';    
             session_start();
             
             if (!isset($_SESSION['usuario'])) {
@@ -35,7 +35,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="menuPrincipal.php">Mis tiempos</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="menuPrincipal.php">Marcas<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="menuPrincipal.php">Mejores marcas</a></li>
+                                <li><a href="misMarcas.php">Mis marcas</a></li>
+                            </ul>
+                        </li>
                         <li class="active"><a href="ranking.php">Ranking</a></li>
                         <li><a href="conversor.php">Conversor</a></li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
@@ -62,7 +67,7 @@
             <script>   
                 $(function(){
                  $("#ver").click(function(){
-                 var url = "consulta.php"; // El script a dónde se realizará la petición.
+                 var url = "Consultas/ranking.php"; // El script a dónde se realizará la petición.
                     $.ajax({
                            type: "POST",
                            url: url,
@@ -114,7 +119,7 @@
                         </select>
               </div>
               <div class="form-group">
-              <input type="button" value="Ver" id="ver" name="ver" class="btn btn-success">
+                  <input type="button" value="Ver" id="ver" name="ver" class="btn btn-success">
               </div>
            </form>
         <div id="marcas">

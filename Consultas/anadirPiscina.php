@@ -15,5 +15,5 @@ $consulta = $conexion->prepare("INSERT INTO piscinas"
         . "VALUES (:piscina)");
 $consulta->bindParam(":piscina", $piscina );
 $consulta->execute();
-header('Location: editarMarcas.php');
+//header('Location: editarMarcas.php');
 ?>

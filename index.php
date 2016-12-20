@@ -13,7 +13,7 @@
     </head>
     <body>
         <?php
-        include_once 'conexion.php';
+        include_once 'Consultas/conexion.php';
         error_reporting(E_ALL^E_NOTICE);
             $usuario = $_POST['usuario'];
             $pass = $_POST['pass'];

@@ -35,7 +35,7 @@ if (move_uploaded_file($temp,$url)) {
     $consulta->bindParam(":idTipoCompeticion", $tipoCompeticion);
     $consulta->bindParam(":idCategoria", $categoria);
     $consulta->execute();
-    header('Location: convocatorias.php');
+    header('Location: ../convocatorias.php');
     //echo "El archivo se ha subido correctamente";
 }else{
     

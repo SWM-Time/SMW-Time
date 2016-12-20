@@ -14,7 +14,7 @@
     </head>
     <body>
         <?php
-        include_once 'conexion.php';
+        include_once 'Consultas/conexion.php';
         include 'utiles.php';
         session_start();
 
@@ -35,7 +35,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="menuPrincipal.php">Mis tiempos</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="menuPrincipal.php">Marcas<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="menuPrincipal.php">Mejores marcas</a></li>
+                                <li><a href="misMarcas.php">Mis marcas</a></li>
+                            </ul>
+                        </li>
                         <li><a href="ranking.php">Ranking</a></li>
                         <li><a href="conversor.php">Conversor</a></li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
@@ -51,7 +56,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="perfilUsuario.php"><span class="glyphicon glyphicon-user"></span> Hola <?php echo $_SESSION['usuario']; ?></a></li>
-                        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        <li><a href="Consultas/logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                     </ul>
                 </div>
             </div>
@@ -67,7 +72,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND idTipoPiscina = 1 OR idTipoPiscina = 2  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
+                    $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = utiles::formatFecha($fecha, "/");
@@ -91,13 +96,13 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT * FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idTipoPiscina = 3 OR idTipoPiscina = 4 AND idUsuario = ".$foo." ORDER BY pruebas.idPrueba ASC");
+                    $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND (idTipoPiscina = 3 OR idTipoPiscina = 4)  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = utiles::formatFecha($fecha, "/");
                         echo '<tr>';
                         echo '<td>' . $registro["prueba"] . '</td>';
-                        echo '<td>' . substr($registro["tiempo"], 3, 10) . '</td>';
+                        echo '<td>' . substr($registro["min_tiempo"], 3, 10) . '</td>';
                         echo '<td>' . $fechaBuena . '</td>';
                         echo '</tr>';
                     }

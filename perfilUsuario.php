@@ -9,11 +9,15 @@
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
+        <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
+        <script src="./js/jquery-3.1.1.js"></script>
+        <script src="./bootstrap/js/bootstrap.min.js"></script>
         
     </head>
     <body>
         <?php
-            include_once 'conexion.php';    
+            include_once 'Consultas/conexion.php';
+            include './utiles.php';
             session_start();
             
             if (!isset($_SESSION['usuario'])) {
@@ -30,7 +34,12 @@
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
-                        <li><a href="menuPrincipal.php">Mis tiempos</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="menuPrincipal.php">Marcas<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="menuPrincipal.php">Mejores marcas</a></li>
+                                <li><a href="misMarcas.php">Mis marcas</a></li>
+                            </ul>
+                        </li>
                         <li><a href="ranking.php">Ranking</a></li>
                         <li><a href="conversor.php">Conversor</a></li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
@@ -45,40 +54,87 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li  class="active"><a href="perfilUsuario.php"><span class="glyphicon glyphicon-user"></span> Hola <?php echo $_SESSION['usuario'];?></a></li>
-                        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        <li><a href="Consultas/logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="container">
-        <form method="post" action="updateUsuario.php">
+        <div class="exito"></div>
+        <form method="post" action="Consultas/updateUsuario.php">
         <?php
             $sqlDatos = $conexion->query("select * from usuarios where usuario='".$_SESSION['usuario']."'");
             while ($fila=$sqlDatos->fetch()){
-                echo "<label>Usuario:</label><input type='text' class='form-control' name='usuario' id='usuario' value='$fila[1]'>";
+                $fecha = utiles::formatFecha($fila[7]);
+                echo "<label>Usuario:</label><input type='text' class='form-control' name='usuario' id='usuario' value='$fila[1]' disabled>";
                 echo "<label>Nombre:</label><input type='text' class='form-control' name='nombre' id='nombre' value='$fila[3]'>";
-                echo "<input type='hidden'  name='pass' id='pass' value='$fila[2]'>";
                 echo "<label>Primer apellido:</label><input type='text' class='form-control' name='apellido1' id='apellido1' value='$fila[4]'>";
                 echo "<label>Segundo Apellido:</label><input type='text' class='form-control' name='apellido2' id='apellido2' value='$fila[5]'>";
-                echo "<label>Fecha de nacimiento:</label><input type='text' class='form-control' name='fnac' id='fnac' value='$fila[7]'>";
-                echo "<label>Email:</label><input type='text' class='form-control' name='email' id='email' value='$fila[10]'>";
-                echo "<label>Contraseña:</label></br>";    
+                echo "<label>Fecha de nacimiento:</label><input type='text' class='form-control' name='fnac' id='fnac' value='$fecha'>";
+                echo "<label>Email:</label><input type='text' class='form-control' name='email' id='email' value='$fila[10]'>"; 
             }
         ?>
-            <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#cambiaPass">Cambiar contraseña</button>
-            <div id="cambiaPass" class="collapse">
-                    </br>
-                    <label>Nueva contraseña</label>
-                    <input type="text" name="pass1" id="pass1" class='form-control'>
-                    <label>Repite contraseña</label>
-                    <input type="text" name="pass2" id="pass2" class='form-control'>      
-          </div>
-            </br></br></br>
+            <br/>
             <input type="submit" value="Guardar" id="nuevaPass" name="nuevaPass" class="btn btn-success">
         </form>
+        <br/>
+        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cambiaPass">Cambiar contraseña</button>
+            <script>
+                 $(function(){
+                 $("#guardarPass").click(function(){
+                 var url = "Consultas/cambiaPass.php"; // El script a dónde se realizará la petición.
+                    $.ajax({
+                           type: "POST",
+                           url: url,
+                           data: $("#formularioPass").serialize(), // Adjuntar los campos del formulario enviado.
+                           success: function(data)
+                           {
+                               $("#pass1").val('');
+                               $("#pass2").val('');
+                               $(".exito").html("<h2 id='texto'>Contraseña cambiada correctamente!</h2>");
+                               $("#texto").fadeOut(2000); 
+                               $('#cambiaPass').modal('toggle');
+
+                           }
+                         });
+
+                    return false;
+                 });
+                 });
+                 </script>
+            <div id="cambiaPass" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Nueva contraseña</h4>
+              </div>
+              <div class="modal-body">
+                  <form method="post" id="formularioPass">
+                    <div class="form-group">
+                        <label>Nueva contraseña</label>
+                        <input type="password" id="pass1" name="pass1" class="form-control">
+                    </div>
+                    <!--<div class="form-group">
+                        <label>Repite contraseña</label>
+                        <input type="password" id="pass2" name="pass2" class="form-control">
+                    </div>-->
+
+                  </br>
+                 
+                   <input type="submit" class="btn btn-success" value="Guardar contraseña" id="guardarPass" >
+                  
+
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        
         </div>      
     </body>
-<!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
-        <script src="./js/jquery-3.1.1.js"></script>
-        <script src="./bootstrap/js/bootstrap.min.js"></script>
+
 </html>
