@@ -22,7 +22,7 @@
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
                         <span class="glyphicon glyphicon-menu-down"></span>
                     </button>
-                    <img alt="SWM-TIME" src="imagenes/logos/crono_48.png">
+                    <img alt="SWM-TIME" src="imagenes/cronos/crono48.png">
                 </div>
                 <div class="collapse navbar-collapse" id="myNavbar">
                     <ul class="nav navbar-nav">
@@ -33,7 +33,12 @@
                             </ul>
                         </li>
                         <li><a href="ranking.php">Ranking</a></li>
-                        <li class="active"><a href="conversor.php">Conversor</a></li>
+                        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="conversor.php">Calculadoras<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="conversor.php">Conversor</a></li>
+                                <li><a href="puntosFINA.php">Puntos FINA</a></li>
+                            </ul>
+                        </li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
                         <?php
                         $sql = $conexion->query("select idRol from usuarios where usuario = '".$_SESSION['usuario']."'");
@@ -156,7 +161,7 @@ function convertir(form) {
 </script>
 <div class="row">
     <div class="center-block">
-        <h3 class="text-center">Conversor:</h3>
+        <h3 class="text-center">Conversor</h3>
     </div>
 </div>
 <form method="post" action="#">

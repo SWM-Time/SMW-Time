@@ -37,7 +37,7 @@
             }
             ?>
         <div class="jumbotron text-center">
-            <img src="imagenes/logos/crono_128.png"> 
+            <img src="imagenes/cronos/crono128.png"> 
         </div>
         <div class="container">
                 <div class="col-offset-6 centered">

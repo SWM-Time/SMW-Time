@@ -25,7 +25,7 @@ echo '<table class= "table table-hover">
         <th>Fecha</th>
       </tr>
     </thead>';
-$resultadoMarcas = $conexion->query("SELECT usuario,nombre, apellido1, apellido2 , MIN(tiempo) as min_tiempo, fecha, idTipoPiscina FROM tiempos INNER JOIN usuarios ON usuarios.idUsuario= tiempos.idUsuario WHERE idPrueba=".$prueba." AND sexo = ".$sexo." AND (idTipoPiscina =".$piscina.") GROUP BY usuarios.usuario ORDER BY tiempos.tiempo ASC");
+$resultadoMarcas = $conexion->query("SELECT usuario,nombre, apellido1, apellido2 , MIN(tiempo) as min_tiempo, fecha, idTipoPiscina FROM tiempos INNER JOIN usuarios ON usuarios.idUsuario= tiempos.idUsuario WHERE idPrueba=".$prueba." AND sexo = ".$sexo." AND (idTipoPiscina =".$piscina.") GROUP BY usuarios.usuario ORDER BY min_tiempo ASC");
                     while ($registroMarcas = $resultadoMarcas->fetch()) {
                         $fecha = utiles::formatFecha($registroMarcas['fecha']);
                         echo "<tbody>
