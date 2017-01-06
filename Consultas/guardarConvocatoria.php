@@ -16,7 +16,8 @@ $temporada= $_POST['temporada'];
 $tipoPiscina= $_POST['tipoPiscina'];
 $directorio = "Convocatorias";
 $convocatoria = $_FILES['convocatoria']['name'];
-$url = $directorio . "/" . $convocatoria;
+$url = "../" .$directorio . "/" . $convocatoria;
+$urlBD = $directorio . "/" . $convocatoria;
 if ($_FILES["convocatoria"]["type"] == "application/pdf"){
 if (move_uploaded_file($temp,$url)) {
     echo "hola";
@@ -26,7 +27,7 @@ if (move_uploaded_file($temp,$url)) {
             . "idTemporada, idTipoCompeticion, idCategoria) "
             . "VALUES (:url,:fecha, :hora, :idPiscina, :idTipoPiscina,"
             . ":idTemporada, :idTipoCompeticion, :idCategoria)");
-    $consulta->bindParam(":url", $url);
+    $consulta->bindParam(":url", $urlBD);
     $consulta->bindParam(":fecha", $fecha);
     $consulta->bindParam(":hora", $hora);
     $consulta->bindParam(":idPiscina", $piscina);
@@ -35,7 +36,7 @@ if (move_uploaded_file($temp,$url)) {
     $consulta->bindParam(":idTipoCompeticion", $tipoCompeticion);
     $consulta->bindParam(":idCategoria", $categoria);
     $consulta->execute();
-    //header('Location: ../convocatorias.php');
+    header('Location: ../convocatorias.php');
     //echo "El archivo se ha subido correctamente";
 }else{
     
