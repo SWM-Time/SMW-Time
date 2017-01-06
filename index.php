@@ -15,7 +15,8 @@
     <body>
         <?php
         include_once 'Consultas/conexion.php';
-        error_reporting(E_ALL^E_NOTICE);
+        ini_set('display_errors', '0');     
+        error_reporting(E_ALL | E_STRICT);
             $usuario = $_POST['usuario'];
             $pass = $_POST['pass'];
             
@@ -56,7 +57,7 @@
                             <label for="error" class="error"><?php echo $error; ?></label>
                         </div>
                         
-                        <button type="submit" class="btn btn-default" id="validar" name="validar">Entrar</button>
+                        <button type="submit" class="btn btn-success" id="validar" name="validar">Entrar</button>
                     </form>
                 </div>
         </div>    

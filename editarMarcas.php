@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
         <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
         <script src="./js/jquery-3.1.1.min.js"></script>
         <script src="./bootstrap/js/bootstrap.js"></script>
@@ -372,8 +372,7 @@ $(document).ready(function() {
             { "data": "pass" },
             { "data": "nombre" },
             { "data": "apellido1" },
-            { "data": "apellido2" },
-            { "defaultContent": "<button class='btn btn-danger' id='eliminar'>Eliminar</button>" }
+            { "data": "apellido2" }
 
         ],
         
@@ -402,10 +401,6 @@ $(document).ready(function() {
             }
         }
     } );
-    $('#eliminar tbody').on( 'click', 'button', function () {
-         var data = table.row( $(this).parents('tr') ).data();
-            alert( data[0] );
-        } );
 } );
 
 
@@ -419,7 +414,6 @@ $(document).ready(function() {
                 <th>Nombre</th>
                 <th>Apellido1</th>
                 <th>Apellido2</th>
-                <th>Eliminar</th>
             </tr>
         </thead>
 

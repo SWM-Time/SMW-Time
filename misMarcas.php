@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/lumen.css">
         <link rel="stylesheet" href="./bootstrap/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/v/dt/dt-1.10.13/datatables.min.css" />
         <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
         <script src="./js/jquery-3.1.1.min.js"></script>
         <script src="./bootstrap/js/bootstrap.js"></script>

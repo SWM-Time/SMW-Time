@@ -12,7 +12,7 @@ if (!isset($usuario)) {
 $i=0;
 $tabla = "";
 
-$resultadoMarcas = $conexion->query("SELECT * FROM tiempos t JOIN usuarios u ON u.idUsuario= t.idUsuario JOIN piscinas p ON p.idPiscina= t.idTipoPiscina JOIN pruebas pr ON pr.idPrueba=t.idPrueba JOIN tipopiscina tp ON tp.idTipoPiscina=t.idTipoPiscina where usuario ='".$usuario."'");
+$resultadoMarcas = $conexion->query("SELECT * FROM tiempos t JOIN usuarios u ON u.idUsuario= t.idUsuario JOIN piscinas p ON p.idPiscina= t.idPiscina JOIN pruebas pr ON pr.idPrueba=t.idPrueba JOIN tipopiscina tp ON tp.idTipoPiscina=t.idTipoPiscina where usuario ='".$usuario."'");
 
                     while ($registroMarcas = $resultadoMarcas->fetch()) {
                         $tabla.= '{"prueba":"'.$registroMarcas["prueba"].'", "marca":"'.$registroMarcas["tiempo"].'", "fecha":"'.$registroMarcas["fecha"].'", "tipo_piscina":"'.$registroMarcas["tipoPiscina"].'", "piscina":"'.$registroMarcas["piscina"].'"},';

@@ -35,11 +35,12 @@ if (move_uploaded_file($temp,$url)) {
     $consulta->bindParam(":idTipoCompeticion", $tipoCompeticion);
     $consulta->bindParam(":idCategoria", $categoria);
     $consulta->execute();
-    header('Location: ../convocatorias.php');
+    //header('Location: ../convocatorias.php');
     //echo "El archivo se ha subido correctamente";
 }else{
     
-    echo 'SOLO SE ADMITEN ARCHIVOS PDF';
+    echo 'SOLO SE ADMITEN ARCHIVOS PDF</br>';
+    echo '<a href="../convocatorias.php">VOLVER</a>';
     die;
 }
 

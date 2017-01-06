@@ -13,6 +13,22 @@
         <!-- Versión compilada y comprimida del JavaScript de Bootstrap -->
         <script src="./js/jquery-3.1.1.js"></script>
         <script src="./bootstrap/js/bootstrap.min.js"></script>
+        <!--Cargamos los scripts necesarios para poder hacer las validaciones:-->
+        <!--Los scripts se cargan siempre después de los css, nunca antes!-->
+        <script type="text/javascript" src="libs/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" src="libs/jquery.validate.js"></script>
+        <!------------------------------------------------------->
+        <script type="text/javascript" src="libs/jquery-validation-1.14.0/dist/additional-methods.js"></script>
+        <!--Mensajes en español-->
+        <script type="text/javascript" src="libs/jquery-validation-1.14.0/dist/localization/messages_es.js"></script>
+        <!------------------------------------------------------->
+        <!--Cambiar el color a los mensajes de error-->
+        <style>
+            .error{
+                color: red;
+                font-size: 12px;
+            }
+        </style>
         
     </head>
     <body>
@@ -67,7 +83,7 @@
         </nav>
         <div class="container">
         <div class="exito"></div>
-        <form method="post" action="Consultas/updateUsuario.php">
+        <form method="post" action="Consultas/updateUsuario.php" novalidate id="modificaPerfil">
         <?php
             $sqlDatos = $conexion->query("select * from usuarios where usuario='".$_SESSION['usuario']."'");
             while ($fila=$sqlDatos->fetch()){
@@ -83,6 +99,42 @@
             <br/>
             <input type="submit" value="Guardar" id="nuevaPass" name="nuevaPass" class="btn btn-success">
         </form>
+        <script>
+        $("#modificaPerfil").validate({
+            onkeyup:false,
+            onfocusout:false,
+            onclick:false,
+            rules:{
+                nombre:{
+                    required:true,
+                    pattern: /[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+/,
+                    minlength:2
+                },
+                apellido1:{
+                    required:true,
+                    pattern: /[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+/,
+                    minlength:2
+                    
+                },
+                apellido2:{
+                    required:true,
+                    pattern: /[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+/,
+                    minlength:2
+                },
+                fnac:{
+                    required:true,
+                    pattern: /^[0-3]?[0-9].[0-3]?[0-9].(?:[0-9]{2})?[0-9]{2}$/
+                },
+                email:{
+                    email:true
+                }
+            },
+            messages:{
+                nombre:"Nombre incorrecto",
+                fnac:"Escribe un formato valido dd/mm/aaaa"
+            }
+        });
+        </script>
         <br/>
         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#cambiaPass">Cambiar contraseña</button>
             <script>
@@ -123,11 +175,6 @@
                         <label>Nueva contraseña</label>
                         <input type="password" id="pass1" name="pass1" class="form-control">
                     </div>
-                    <!--<div class="form-group">
-                        <label>Repite contraseña</label>
-                        <input type="password" id="pass2" name="pass2" class="form-control">
-                    </div>-->
-
                   </br>
                  
                    <input type="submit" class="btn btn-success" value="Guardar contraseña" id="guardarPass" >

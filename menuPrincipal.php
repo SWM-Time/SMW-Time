@@ -79,6 +79,7 @@
                 <tbody>
                     <?php
                     $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
+                    //SELECT prueba, fecha, tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = 27 AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  AND tiempo = (SELECT min(tiempo) AS min_tiempo FROM tiempos WHERE tiempos.idPrueba = pruebas.idPrueba GROUP BY pruebas.idPrueba ORDER BY pruebas.idPrueba ASC)
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = utiles::formatFecha($fecha, "/");
