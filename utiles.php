@@ -46,7 +46,7 @@ class utiles {
                 $pass .= substr($caracteres,rand(0,strlen($caracteres)),1); /*Extraemos 1 caracter de los caracteres
                 entre el rango 0 a Numero de letras que tiene la cadena */
             }
-            echo $pass;
+            return $pass;
     }
     
     public function formatTiempoDB($time) {

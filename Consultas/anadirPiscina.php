@@ -7,7 +7,7 @@ if (!isset($_SESSION['usuario'])) {
     die("Error - debe <a href='index.php'>identificarse</a>.<br />");
 }
 
-$piscina= $_POST['piscina'];
+$piscina= htmlspecialchars($_POST['piscina']);
 
 
 $consulta = $conexion->prepare("INSERT INTO piscinas"

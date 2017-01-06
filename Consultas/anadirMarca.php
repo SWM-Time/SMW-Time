@@ -9,14 +9,14 @@ if (!isset($_SESSION['usuario'])) {
     die("Error - debe <a href='index.php'>identificarse</a>.<br />");
 }
 
-$nadador= $_POST['nadador'];
-$prueba= $_POST['prueba'];
-$fechaMarca= utiles::formatFechaDB($_POST['fechaMarca']);
-$tipoPiscina= $_POST['tipoPiscina'];
-$tipoCompeticion= $_POST['tipoCompeticion'];
-$piscina= $_POST['piscina'];
-$temporada = $_POST['temporada'];
-$marca = utiles::formatTiempoDB($_POST['marca']);
+$nadador= htmlspecialchars($_POST['nadador']);
+$prueba= htmlspecialchars($_POST['prueba']);
+$fechaMarca= utiles::formatFechaDB(htmlspecialchars($_POST['fechaMarca']));
+$tipoPiscina= htmlspecialchars($_POST['tipoPiscina']);
+$tipoCompeticion= htmlspecialchars($_POST['tipoCompeticion']);
+$piscina= htmlspecialchars($_POST['piscina']);
+$temporada = htmlspecialchars($_POST['temporada']);
+$marca = utiles::formatTiempoDB(htmlspecialchars($_POST['marca']));
 //$marca= $_POST['marca'];
 
 

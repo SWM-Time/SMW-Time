@@ -114,12 +114,6 @@ $(document).ready(function() {
             }
         }
     } );
-    $('#editarMarcas tbody').on( 'click', 'button', function () {
-         var data = table.row( $(this).parents('tr') ).data();
-            alert( data[0] );
-        //https://datatables.net/examples/ajax/null_data_source.html
-        //alert( "click!" );
-        } );
 } );
 
 

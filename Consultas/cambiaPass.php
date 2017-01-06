@@ -8,7 +8,7 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $usuario= $_SESSION['usuario'];
-$pass1= $_POST['pass1'];
+$pass1= htmlspecialchars($_POST['pass1']);
 
 
 $consulta = $conexion->prepare("UPDATE usuarios SET pass = :pass WHERE usuario = :usuario");

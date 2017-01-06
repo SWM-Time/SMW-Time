@@ -17,8 +17,8 @@
         include_once 'Consultas/conexion.php';
         ini_set('display_errors', '0');     
         error_reporting(E_ALL | E_STRICT);
-            $usuario = $_POST['usuario'];
-            $pass = $_POST['pass'];
+            $usuario = htmlspecialchars($_POST['usuario']);
+            $pass = htmlspecialchars($_POST['pass']);
             
             if (isset($_POST['validar'])) {
                 if (empty($usuario) || empty($pass)) {

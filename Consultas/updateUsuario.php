@@ -9,11 +9,11 @@ if (!isset($_SESSION['usuario'])) {
 }
 
 $usuario= $_SESSION['usuario'];
-$nombre = $_POST['nombre'];
-$apellido1= $_POST['apellido1'];
-$apellido2= $_POST['apellido2'];
-$fechaBuena = utiles::formatFechaDB($_POST['fnac']);
-$email= $_POST['email'];
+$nombre = htmlspecialchars($_POST['nombre']);
+$apellido1= htmlspecialchars($_POST['apellido1']);
+$apellido2= htmlspecialchars($_POST['apellido2']);
+$fechaBuena = utiles::formatFechaDB(htmlspecialchars($_POST['fnac']));
+$email= htmlspecialchars($_POST['email']);
 
 
 $consulta = $conexion->prepare("UPDATE usuarios SET"

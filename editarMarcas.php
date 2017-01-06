@@ -28,8 +28,14 @@
             session_start();
             
             if (!isset($_SESSION['usuario'])) {
-            die("Error - debe <a href='index.php'>identificarse</a>.<br />");
-        }
+                die("Error - debe <a href='index.php'>identificarse</a>.<br />");
+            }
+            $sql = $conexion->query("select idRol from usuarios where usuario = '".$_SESSION['usuario']."'");
+            $resultado = $sql->fetch();
+            $rol = $resultado[0];
+            if($rol[0] != 1 ){
+                die("Error - no tienes permisos para entrar aqui. <a href='menuPrincipal.php'>Volver</a>");
+            }
         ?>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
@@ -163,11 +169,13 @@
                         <input type="text" id="new_usuario" name="new_usuario" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label>Contraseña</label>
+                        <label>Contraseña -> </label>
                         <?php
                             $pass = utiles::generaPass();
+                            echo $pass;
+                            echo "<input type='hidden' id='pass' name='pass' value=".$pass.">";
                        ?>
-                        <!--<input type="hidden" name="pass" id="pass" value="<?php //echo md5($pass)?>">-->
+                        
                         </br> 
                     </div>
                     <div class="form-group">
@@ -346,7 +354,7 @@
                     </div>
                     <div class="form-group">
                         <label>Marca</label>
-                        <input type="text" name="marca" id="marca" class="form-control" placeholder="XX:XX:XX.XX">
+                        <input type="text" name="marca" id="marca" class="form-control" placeholder="XX:XX.XX">
                     </div>
                       <input type="submit" class="btn btn-success" value="Añadir" id="anadirMarca" name="anadirMarca">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>

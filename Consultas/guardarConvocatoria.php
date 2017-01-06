@@ -7,13 +7,13 @@ if (!isset($_SESSION['usuario'])) {
     die("Error - debe <a href='index.php'>identificarse</a>.<br />");
 }
 $temp = $_FILES['convocatoria']['tmp_name'];
-$tipoCompeticion = $_POST['tipoCompeticion'];
-$piscina= $_POST['piscina'];
-$categoria= $_POST['categoria'];
-$fecha= $_POST['fecha'];
-$hora= $_POST['hora'];
-$temporada= $_POST['temporada'];
-$tipoPiscina= $_POST['tipoPiscina'];
+$tipoCompeticion = htmlspecialchars($_POST['tipoCompeticion']);
+$piscina= htmlspecialchars($_POST['piscina']);
+$categoria= htmlspecialchars($_POST['categoria']);
+$fecha= htmlspecialchars($_POST['fecha']);
+$hora= htmlspecialchars($_POST['hora']);
+$temporada= htmlspecialchars($_POST['temporada']);
+$tipoPiscina= htmlspecialchars($_POST['tipoPiscina']);
 $directorio = "Convocatorias";
 $convocatoria = $_FILES['convocatoria']['name'];
 $url = "../" .$directorio . "/" . $convocatoria;

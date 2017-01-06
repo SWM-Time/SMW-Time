@@ -10,4 +10,11 @@ $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"; 
 echo $pass;
 echo "</br>";
 echo md5($pass);
+echo "</br>";
+echo "</br>";
+echo "</br>";
+echo "</br>";
+$cadena = '10 es < que 21, y 10 es > que 4, "estoy entre comillas dobles"';
+echo "</br>";
+echo htmlspecialchars($cadena, ENT_QUOTES);
 ?>

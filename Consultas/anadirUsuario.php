@@ -9,17 +9,16 @@ if (!isset($_SESSION['usuario'])) {
     die("Error - debe <a href='index.php'>identificarse</a>.<br />");
 }
 
-$new_usuario= $_POST['new_usuario'];
-$pass= $_POST['pass'];
-$nombre = $_POST['nombre'];
-$apellido1= $_POST['apellido1'];
-$apellido2= $_POST['apellido2'];
-$rol= $_POST['rol'];
-$fnac= utiles::formatFechaDB($_POST['fnac']);
-$categoria = $_POST['categoria'];
-$sexo= $_POST['sexo'];
-$email= $_POST['email'];
-
+$new_usuario= htmlspecialchars($_POST['new_usuario']);
+$pass= htmlspecialchars($_POST['pass']);
+$nombre = htmlspecialchars($_POST['nombre']);
+$apellido1= htmlspecialchars($_POST['apellido1']);
+$apellido2= htmlspecialchars($_POST['apellido2']);
+$rol= htmlspecialchars($_POST['rol']);
+$fnac= utiles::formatFechaDB(htmlspecialchars($_POST['fnac']));
+$categoria = htmlspecialchars($_POST['categoria']);
+$sexo= htmlspecialchars($_POST['sexo']);
+$email= htmlspecialchars($_POST['email']);
 
 $consulta = $conexion->prepare("INSERT INTO usuarios "
         . "(usuario, pass, nombre, apellido1, apellido2, "
@@ -37,6 +36,7 @@ $consulta->bindParam(":idCategoria", $categoria);
 $consulta->bindParam(":sexo", $sexo);
 $consulta->bindParam(":email",$email);
 
+/*
 var_dump($new_usuario."<br>");
 var_dump($pass."<br>");
 var_dump($nombre."<br>");
@@ -49,7 +49,10 @@ var_dump($sexo."<br>");
 var_dump($email."<br>");
 var_dump($consulta);
 var_dump(debug_backtrace());
+*/
 $consulta->execute();
+
+
 //die;
 header('Location: ../editarMarcas.php');
 ?>

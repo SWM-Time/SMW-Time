@@ -15,7 +15,6 @@
         <script src="./bootstrap/js/bootstrap.min.js"></script>
         <!--Cargamos los scripts necesarios para poder hacer las validaciones:-->
         <!--Los scripts se cargan siempre después de los css, nunca antes!-->
-        <script type="text/javascript" src="libs/jquery-1.8.2.min.js"></script>
         <script type="text/javascript" src="libs/jquery.validate.js"></script>
         <!------------------------------------------------------->
         <script type="text/javascript" src="libs/jquery-validation-1.14.0/dist/additional-methods.js"></script>
@@ -164,7 +163,7 @@
           <div class="modal-dialog">
 
             <!-- Modal content-->
-            <div class="modal-content">
+            <div class="modal-content" id="modalPass">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Nueva contraseña</h4>
@@ -176,10 +175,12 @@
                         <input type="password" id="pass1" name="pass1" class="form-control">
                     </div>
                   </br>
-                 
-                   <input type="submit" class="btn btn-success" value="Guardar contraseña" id="guardarPass" >
-                  
-
+                  <script>
+                      jQuery( "#formularioPass" ).submit(function() {
+                            $('#modalPass').modal('hide')
+                        });
+                  </script>
+                   <input type="submit" class="btn btn-success" value="Guardar contraseña" id="guardarPass">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               </form>
               </div>
