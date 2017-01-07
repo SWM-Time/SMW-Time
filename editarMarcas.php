@@ -19,6 +19,8 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="js/datedropper.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/plug-ins/1.10.13/api/fnReloadAjax.js"></script>
+        
         
     </head>
     <body>
@@ -79,9 +81,9 @@
         </nav>
         <div class="container">
             <div class="row">
-             <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal" id="nuevoUsuario">Añadir usuarios</button>
-             <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalP">Añadir piscina</button>
-             <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevaMarca">Añadir marca</button>
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Añadir usuarios</button>
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalP">Añadir piscina</button>
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevaMarca">Añadir marca</button>
             </div>
             <div class="exito"></div>
 
@@ -370,18 +372,33 @@
 
 //var respuestas=$.ajax('cargarDatatable.php');
 $(document).ready(function() {
-    var table =$('#editarMarcas').DataTable( {
+    var table =$('#usuarios').DataTable( {
         'ajax':{'url':'Consultas/cargarDatatable.php'
                 
         },
         "columns": [
             { "data": "idUsuario" },
             { "data": "usuario" },
-            { "data": "pass" },
             { "data": "nombre" },
             { "data": "apellido1" },
-            { "data": "apellido2" }
+            { "data": "apellido2" },
+            { "data": "fnac" },
+            { "data": "email" }
 
+        ],
+        "columnDefs": [{
+        "targets": 7,
+        "data": "boton",
+        "render":function (data) { 
+                return '<button class="btn-danger" id="borrar" name="borrar">Eliminar</button>';
+        }
+
+        },
+        {
+           "targets": [ 0 ],
+           "visible": false,
+           "searchable": false
+        }
         ],
         
         "language": {
@@ -409,19 +426,43 @@ $(document).ready(function() {
             }
         }
     } );
+    
+    $("#usuarios").on("click", "#borrar", function(e){
+        tabla = $("#usuarios").DataTable();
+        e.preventDefault();
+        var nRow = $(this).parents('tr')[0];
+                
+        aData= tabla.row( nRow ).data();
+
+        var idUsuario1=aData.idUsuario;
+        
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: "Consultas/eliminarUsuario.php",
+            data: { idUsuario: idUsuario1 },        
+            success: function(data) {
+                //$('#usuarios').fnDraw();
+                //$('#usuarios').DataTable().draw();
+                
+            } 
+        });
+    });
 } );
 
 
 </script>
-<table id="editarMarcas" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<table id="usuarios" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>Email</th>
+                <th>idUsuario</th>
                 <th>Usuario</th>
-                <th>Fecha nacimiento</th>
                 <th>Nombre</th>
                 <th>Apellido1</th>
                 <th>Apellido2</th>
+                <th>Fecha nacimiento</th>
+                <th>Email</th>
+                <th>Eliminar</th>
             </tr>
         </thead>
 

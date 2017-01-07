@@ -14,7 +14,7 @@ $tabla = "";
 
 $resultadoMarcas = $conexion->query("SELECT * FROM usuarios");
                     while ($registroMarcas = $resultadoMarcas->fetch()) {
-                        $tabla.= '{"idUsuario":"'.$registroMarcas["email"].'", "usuario":"'.$registroMarcas["usuario"].'", "pass":"'.$registroMarcas["fnac"].'", "nombre":"'.$registroMarcas["nombre"].'", "apellido1":"'.$registroMarcas["apellido1"].'", "apellido2":"'.$registroMarcas["apellido2"].'"},';
+                        $tabla.= '{"idUsuario":"'.$registroMarcas["idUsuario"].'", "usuario":"'.$registroMarcas["usuario"].'", "nombre":"'.$registroMarcas["nombre"].'", "apellido1":"'.$registroMarcas["apellido1"].'", "apellido2":"'.$registroMarcas["apellido2"].'", "fnac":"'.$registroMarcas["fnac"].'", "email":"'.$registroMarcas["email"].'"},';
                         $i++;
                     }
 
