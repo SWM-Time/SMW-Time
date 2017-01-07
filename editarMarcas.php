@@ -260,7 +260,17 @@
                         <label>Piscina</label>
                         <input type="text" id="piscina" name="piscina" class="form-control">
                     </div>
-                  </br>
+                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#piscinas">Ver piscinas</button>
+                        <div id="piscinas" class="collapse">
+                            </br>
+                            <?php
+                                $sqlPiscinas = $conexion->query("select * from piscinas ");
+                                while ($registroPiscinas = $sqlPiscinas->fetch()) {
+                                    echo "<li>".$registroPiscinas['piscina']."</li>";
+                                }
+                            ?>
+                        </div>
+                  </br></br>
                   <input type="submit" class="btn btn-success" value="Añadir" id="anadirPiscina">
 
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
