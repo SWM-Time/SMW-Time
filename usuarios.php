@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>EditarMarcas</title>
+        <title>Editar Marcas</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="./imagenes/logos/favicon.png">
@@ -86,180 +86,121 @@
         </nav>
         <div class="container">
             <div class="row">
-                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModalP">Añadir piscina</button>
-                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#nuevaMarca">Añadir marca</button>
+                <button class="btn btn-success btn-lg" data-toggle="modal" data-target="#myModal">Añadir usuarios</button>
             </div>
             <div class="exito"></div>
 
             <script>   
                 $(function(){
-
-                 $("#anadirPiscina").click(function(){
-                 var url = "Consultas/anadirPiscina.php"; // El script a dónde se realizará la petición.
+                 /*$("#anadirUsuario").click(function(){
+                 var url = "Consultas/anadirUsuario.php"; // El script a dónde se realizará la petición.
                     $.ajax({
                            type: "POST",
                            url: url,
-                           data: $("#formularioPiscina").serialize(), // Adjuntar los campos del formulario enviado.
+                           data: $("#formularioUsuario").serialize(), // Adjuntar los campos del formulario enviado.
                            success: function(data)
                            {
-                               $("#piscina").val('');
-                               $(".exito").html("<h2 id='texto'>Piscina añadida correctamente!</h2>");
+                               $("#new_usuario").val('');
+                               $("#pass").val('');
+                               $("#nombre").val('');
+                               $("#apellido1").val('');
+                               $("#apellido2").val('');
+                               $("#fnac").val('');
+                               $("#email").val('');
+                               $(".exito").html("<h2 id='texto'>Usuario añadido correctamente!</h2>");
                                $("#texto").fadeOut(2000); 
-                               $('#myModalP').modal('toggle');
-                           }
-                         });
-
-                    return false; // Evitar ejecutar el submit del formulario.
-                 });
-
-                 $("#anadirMarca").click(function(){
-                 var url = "Consultas/anadirMarca.php"; // El script a dónde se realizará la petición.
-                    $.ajax({
-                           type: "POST",
-                           url: url,
-                           data: $("#formularioMarca").serialize(), // Adjuntar los campos del formulario enviado.
-                           success: function(data)
-                           {
-                              
-                               $(".exito").html("<h2 id='texto'>Marca añadida correctamente!</h2>");
-                               $("#texto").fadeOut(2000); 
-                               $('#nuevaMarca').modal('toggle');
+                               $('#myModal').modal('toggle');
 
                            }
                          });
 
                     return false; // Evitar ejecutar el submit del formulario.
-                 });
-
+                 });*/
                 });
             </script>
 
 
             <!-- Modal -->
-        <div id="myModalP" class="modal fade" role="dialog">
+        <div id="myModal" class="modal fade" role="dialog">
           <div class="modal-dialog">
-
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Añadir piscinas</h4>
+                <h4 class="modal-title">Añadir usuarios</h4>
               </div>
               <div class="modal-body">
-                  <form method="post" id="formularioPiscina">
+                  <form method="post" id="formularioUsuario" action="Consultas/anadirUsuario.php">
                     <div class="form-group">
-                        <label>Piscina</label>
-                        <input type="text" id="piscina" name="piscina" class="form-control">
+                        <label>Usuario</label>
+                        <input type="text" id="new_usuario" name="new_usuario" class="form-control">
                     </div>
-                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#piscinas">Ver piscinas</button>
-                        <div id="piscinas" class="collapse">
-                            </br>
-                            <?php
-                                $sqlPiscinas = $conexion->query("select * from piscinas ");
-                                while ($registroPiscinas = $sqlPiscinas->fetch()) {
-                                    echo "<li>".$registroPiscinas['piscina']."</li>";
-                                }
-                            ?>
-                        </div>
-                  </br></br>
-                  <input type="submit" class="btn btn-success" value="Añadir" id="anadirPiscina">
-
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-              </form>
-              </div>
-            </div>
-          </div>
-        </div>
-
-<!-- Modal -->
-        <div id="nuevaMarca" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Añadir marcas</h4>
-              </div>
-              <div class="modal-body">
-                  <form method="post" id="formularioMarca" >
                     <div class="form-group">
-                        <label>Nadador</label>
-                        <select id='nadador' name='nadador' class="form-control">
+                        <label>Contraseña -> </label>
                         <?php
-                        $sqlN = $conexion->query("select * from usuarios ");
-                        while ($registroN = $sqlN->fetch()) {
-                            echo "<option value='".$registroN['idUsuario']."'>".$registroN['usuario']."</option>";
-                        }
-                        ?>
-                        </select>
+                            $pass = utiles::generaPass();
+                            echo $pass;
+                            echo "<input type='hidden' id='pass' name='pass' value=".$pass.">";
+                       ?>
+                        
+                        </br> 
                     </div>
                     <div class="form-group">
-                        <label>Prueba</label>
-                        <select id='prueba' name='prueba' class="form-control">
-                        <?php
-                        $sqlP = $conexion->query("select * from pruebas");
-                        while ($registroP = $sqlP->fetch()) {
-                            echo "<option value='".$registroP['idPrueba']."'>".$registroP['prueba']."</option>";
-                        }
-                        ?>
-                        </select>
+                        <label>Nombre</label>
+                        <input type="text" id="nombre" name="nombre" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label>Fecha</label>
-                        <input type="text" id="fechaMarca" name="fechaMarca" class="form-control"/>
-                        <script>$( "#fechaMarca" ).dateDropper();</script>
-                    
-                    </div>
-                    <div class="form-group">
-                        <label>Tipo piscina</label>
-                        <select id='tipoPiscina' name='tipoPiscina' class="form-control">
-                        <?php
-                        $sqlTP = $conexion->query("select * from tipopiscina");
-                        while ($registroTP = $sqlTP->fetch()) {
-                            echo "<option value='".$registroTP['idTipoPiscina']."'>".$registroTP['tipoPiscina']."</option>";
-                        }
-                        ?>
-                        </select>
+                        <label>Primer apellido</label>
+                        <input type="text" id="apellido1" name="apellido1" class="form-control">
                     </div>
                       <div class="form-group">
-                        <label>Tipo competición:</label>
-                        <select id='tipoCompeticion' name='tipoCompeticion' class="form-control">
+                        <label>Segundo apellido</label>
+                        <input type="text" id="apellido2" name="apellido2" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Rol</label>
+                        <select id='rol' name='rol' class="form-control">
                         <?php
-                        $sqlTC = $conexion->query("select * from tipocompeticion ");
-                        while ($registro = $sqlTC->fetch()) {
-                            echo "<option value='".$registro['idTipoCompeticion']."'>".$registro['tipoCompeticion']."</option>";
+                        $sqlR = $conexion->query("select * from roles ");
+                        while ($registroR = $sqlR->fetch()) {
+                            echo "<option value='".$registroR['idRol']."'>".$registroR['rol']."</option>";
                         }
                         ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Piscina</label>
-                        <select id='piscina' name='piscina' class="form-control">
-                        <?php
-                        $sqlPS = $conexion->query("select * from piscinas");
-                        while ($registroPS = $sqlPS->fetch()) {
-                            echo "<option value='".$registroPS['idPiscina']."'>".$registroPS['piscina']."</option>";
-                        }
-                        ?>
-                        </select>
+                        <label>Fecha de nacimiento</label>
+                        <input type="text" id="fnac" name="fnac" class="form-control"/>
+                        <script>$( "#fnac" ).dateDropper();</script>
                     </div>
-                      <div class="form-group">
-                        <label>Temporada</label>
-                        <select id='temporada' name='temporada' class="form-control">
+                    <div class="form-group">
+                        <label>Categoría:</label>
+                        <select id='categoria' name='categoria' class="form-control">
                         <?php
-                        $sqlTP = $conexion->query("select * from temporadas");
-                        while ($registroTP = $sqlTP->fetch()) {
-                            echo "<option value='".$registroTP['idTemporada']."'>".$registroTP['inicioTemporada']."/".$registroTP['finTemporada']."</option>";
+                        $sqlC = $conexion->query("select * from categorias ");
+                        while ($registroC = $sqlC->fetch()) {
+                            echo "<option value='".$registroC['idCategoria']."'>".$registroC['categoria']."</option>";
                         }
                         ?>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Marca</label>
-                        <input type="text" name="marca" id="marca" class="form-control" placeholder="XX:XX.XX">
+                        <label>Sexo:</label>
+                        <select id='sexo' name='sexo' class="form-control">
+                        <?php
+                        $sqlS = $conexion->query("select * from sexo ");
+                        while ($registroS = $sqlS->fetch()) {
+                            echo "<option value='".$registroS['idSexo']."'>".$registroS['sexo']."</option>";
+                        }
+                        ?>
+                        </select>
                     </div>
-                      <input type="submit" class="btn btn-success" value="Añadir" id="anadirMarca" name="anadirMarca">
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="text" id="email" name="email" class="form-control">
+                    </div>
+                  </br>
+                  <input type="submit" class="btn btn-success" value="Añadir" id="anadirUsuario" name="anadirUsuario">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
               </form>
               </div>
@@ -274,17 +215,17 @@
 //var respuestas=$.ajax('cargarDatatable.php');
 $(document).ready(function() {
     var table =$('#usuarios').DataTable( {
-        'ajax':{'url':'Consultas/cargarDatatable.php'
+        'ajax':{'url':'Consultas/cargarDatatableUsuarios.php'
                 
         },
         "columns": [
-            { "data": "idTiempo" },
+            { "data": "idUsuario" },
             { "data": "usuario" },
-            { "data": "prueba" },
-            { "data": "tiempo" },
-            { "data": "fecha" },
-            { "data": "tipoPiscina" },
-            { "data": "piscina" }
+            { "data": "nombre" },
+            { "data": "apellido1" },
+            { "data": "apellido2" },
+            { "data": "fnac" },
+            { "data": "email" }
 
         ],
         "columnDefs": [{
@@ -335,13 +276,13 @@ $(document).ready(function() {
                 
         aData= tabla.row( nRow ).data();
 
-        var idTiempo1=aData.idTiempo;
+        var idUsuario1=aData.idUsuario;
         
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: "Consultas/eliminarMarca.php",
-            data: { idTiempo: idTiempo1 },        
+            url: "Consultas/eliminarUsuario.php",
+            data: { idUsuario: idUsuario1 },        
             success: function(data) {
                 //$('#usuarios').fnDraw();
                 //$('#usuarios').DataTable().draw();
@@ -356,13 +297,13 @@ $(document).ready(function() {
 <table id="usuarios" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>idTiempo</th>
+                <th>idUsuario</th>
                 <th>Usuario</th>
-                <th>Prueba</th>
-                <th>Marca</th>
-                <th>Fecha</th>
-                <th>Tipo piscina</th>
-                <th>Piscina</th>
+                <th>Nombre</th>
+                <th>Apellido1</th>
+                <th>Apellido2</th>
+                <th>Fecha nacimiento</th>
+                <th>Email</th>
                 <th>Eliminar</th>
             </tr>
         </thead>

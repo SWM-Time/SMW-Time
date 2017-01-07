@@ -51,12 +51,17 @@
                         </li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
                         <?php
-                        $sql = $conexion->query("select idRol from usuarios where usuario = '" . $_SESSION['usuario'] . "'");
+                        $sql = $conexion->query("select idRol from usuarios where usuario = '".$_SESSION['usuario']."'");
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
-                        if ($rol[0] == 1 || $rol[0] == 2) {
-                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
-                        }
+                        if($rol[0] == 1 || $rol[0] == 2){
+                                echo '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="editarMarcas.php">Panel de control<span class="caret"></span></a>';
+                                    echo '<ul class="dropdown-menu">';
+                                        echo '<li><a href="editarMarcas.php">Marcas</a></li>';
+                                        echo '<li><a href="usuarios.php">Usuarios</a></li>';
+                                    echo '</ul>';
+                                echo '</li>';
+                          }
                         ?>
 
                     </ul>
@@ -78,14 +83,15 @@
                 </thead>
                 <tbody>
                     <?php
-                    $resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
-                    //SELECT prueba, fecha, tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = 27 AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  AND tiempo = (SELECT min(tiempo) AS min_tiempo FROM tiempos WHERE tiempos.idPrueba = pruebas.idPrueba GROUP BY pruebas.idPrueba ORDER BY pruebas.idPrueba ASC)
+                    //$resultado = $conexion->query("SELECT prueba, fecha, min(tiempo) AS min_tiempo FROM tiempos INNER JOIN pruebas ON tiempos.idPrueba = pruebas.idPrueba WHERE idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2)  GROUP BY prueba ORDER BY pruebas.idPrueba ASC");
+                    //$resultado = $conexion->query("SELECT t.* FROM tiempos t INNER JOIN (SELECT idPrueba, idTiempo, MIN(tiempo) AS min_tiempo FROM tiempos GROUP BY idTiempo) t1 ON t1.idTiempo = t.idTiempo INNER JOIN pruebas ON t.idPrueba = pruebas.idPrueba WHERE t1.idTiempo = t.idTiempo AND t1.min_tiempo = t.tiempo AND t1.idPrueba = t. idPrueba AND idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2) GROUP BY idPrueba ORDER BY pruebas.idPrueba ASC");
+                    $resultado = $conexion->query("SELECT tiempo, prueba, fecha FROM tiempos t INNER JOIN (SELECT idPrueba, idTiempo, MIN(tiempo) AS min_tiempo FROM tiempos GROUP BY idTiempo) t1 ON t1.idTiempo = t.idTiempo INNER JOIN pruebas p ON t.idPrueba = p.idPrueba WHERE t1.idTiempo = t.idTiempo AND t1.min_tiempo = t.tiempo AND t1.idPrueba = t.idPrueba AND idUsuario = ".$foo." AND (idTipoPiscina = 1 OR idTipoPiscina = 2) GROUP BY p.idPrueba ORDER BY p.idPrueba ASC");
                     while ($registro = $resultado->fetch()) {
                         $fecha = $registro["fecha"];
                         $fechaBuena = utiles::formatFecha($fecha, "/");
                         echo '<tr>';
                         echo '<td>' . $registro["prueba"] . '</td>';
-                        echo '<td>' . substr($registro["min_tiempo"], 3, 10) . '</td>';
+                        echo '<td>' . substr($registro["tiempo"], 3, 10) . '</td>';
                         echo '<td>' . $fechaBuena . '</td>';
                         echo '</tr>';
                     }

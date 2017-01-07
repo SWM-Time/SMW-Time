@@ -55,13 +55,18 @@
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
                         if($rol[0] == 1 || $rol[0] == 2){
-                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
-                        }
+                                echo '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="editarMarcas.php">Panel de control<span class="caret"></span></a>';
+                                    echo '<ul class="dropdown-menu">';
+                                        echo '<li><a href="editarMarcas.php">Marcas</a></li>';
+                                        echo '<li><a href="usuarios.php">Usuarios</a></li>';
+                                    echo '</ul>';
+                                echo '</li>';
+                          }
                         ?>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="perfilUsuario.php"><span class="glyphicon glyphicon-user"></span> Hola <?php echo $_SESSION['usuario'];?></a></li>
-                        <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
+                        <li><a href="Consultas/logout.php"><span class="glyphicon glyphicon-log-out"></span> Salir</a></li>
                     </ul>
                 </div>
             </div>

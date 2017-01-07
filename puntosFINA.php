@@ -51,12 +51,17 @@
                         </li>
                         <li><a href="convocatorias.php">Convocatorias</a></li>
                         <?php
-                        $sql = $conexion->query("select idRol from usuarios where usuario = '" . $_SESSION['usuario'] . "'");
+                        $sql = $conexion->query("select idRol from usuarios where usuario = '".$_SESSION['usuario']."'");
                         $resultado = $sql->fetch();
                         $rol = $resultado[0];
-                        if ($rol[0] == 1 || $rol[0] == 2) {
-                            echo '<li><a href="editarMarcas.php">Panel de control</a></li>';
-                        }
+                        if($rol[0] == 1 || $rol[0] == 2){
+                                echo '<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="editarMarcas.php">Panel de control<span class="caret"></span></a>';
+                                    echo '<ul class="dropdown-menu">';
+                                        echo '<li><a href="editarMarcas.php">Marcas</a></li>';
+                                        echo '<li><a href="usuarios.php">Usuarios</a></li>';
+                                    echo '</ul>';
+                                echo '</li>';
+                          }
                         ?>
 
                     </ul>

@@ -12,9 +12,9 @@ $usuario = $_SESSION['usuario'];
 $i=0;
 $tabla = "";
 
-$resultadoMarcas = $conexion->query("SELECT * FROM usuarios");
+$resultadoMarcas = $conexion->query("SELECT idTiempo, u.usuario,  p.prueba, tiempo, fecha, tp.tipoPiscina,  ps.piscina FROM tiempos t JOIN usuarios u ON u.idUsuario = t.idUsuario JOIN pruebas p ON p.idPrueba = t.idPrueba JOIN piscinas ps ON ps.idPiscina = t.idPiscina JOIN tipopiscina tp ON tp.idTipoPiscina = t.idTipoPiscina");
                     while ($registroMarcas = $resultadoMarcas->fetch()) {
-                        $tabla.= '{"idUsuario":"'.$registroMarcas["idUsuario"].'", "usuario":"'.$registroMarcas["usuario"].'", "nombre":"'.$registroMarcas["nombre"].'", "apellido1":"'.$registroMarcas["apellido1"].'", "apellido2":"'.$registroMarcas["apellido2"].'", "fnac":"'.$registroMarcas["fnac"].'", "email":"'.$registroMarcas["email"].'"},';
+                        $tabla.= '{"idTiempo":"'.$registroMarcas["idTiempo"].'", "usuario":"'.$registroMarcas["usuario"].'", "prueba":"'.$registroMarcas["prueba"].'", "tiempo":"'.$registroMarcas["tiempo"].'", "fecha":"'.$registroMarcas["fecha"].'", "tipoPiscina":"'.$registroMarcas["tipoPiscina"].'", "piscina":"'.$registroMarcas["piscina"].'"},';
                         $i++;
                     }
 
