@@ -20,7 +20,23 @@
         <script src="js/datedropper.js"></script>
         <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/plug-ins/1.10.13/api/fnReloadAjax.js"></script>
-        
+        <!--Cargamos los scripts necesarios para poder hacer las validaciones:-->
+        <!--Los scripts se cargan siempre después de los css, nunca antes!-->
+        <script type="text/javascript" src="libs/jquery.validate.js"></script>
+        <!------------------------------------------------------->
+        <script type="text/javascript" src="libs/jquery-validation-1.14.0/dist/additional-methods.js"></script>
+        <!--Mensajes en español-->
+        <script type="text/javascript" src="libs/jquery-validation-1.14.0/dist/localization/messages_es.js"></script>
+        <!------------------------------------------------------->
+        <!--Cambiar el color a los mensajes de error-->
+        <style>
+            .error{
+                color: red;
+                font-size: 12px;
+            }
+        </style>
+        <script type="text/javascript" src="js/cargarDatatable.js"></script>
+        <script type="text/javascript" src="js/editarMarcas.js"></script>
         
     </head>
     <body>
@@ -91,48 +107,6 @@
             </div>
             <div class="exito"></div>
 
-            <script>   
-                $(function(){
-
-                 $("#anadirPiscina").click(function(){
-                 var url = "Consultas/anadirPiscina.php"; // El script a dónde se realizará la petición.
-                    $.ajax({
-                           type: "POST",
-                           url: url,
-                           data: $("#formularioPiscina").serialize(), // Adjuntar los campos del formulario enviado.
-                           success: function(data)
-                           {
-                               $("#piscina").val('');
-                               $(".exito").html("<h2 id='texto'>Piscina añadida correctamente!</h2>");
-                               $("#texto").fadeOut(2000); 
-                               $('#myModalP').modal('toggle');
-                           }
-                         });
-
-                    return false; // Evitar ejecutar el submit del formulario.
-                 });
-
-                 $("#anadirMarca").click(function(){
-                 var url = "Consultas/anadirMarca.php"; // El script a dónde se realizará la petición.
-                    $.ajax({
-                           type: "POST",
-                           url: url,
-                           data: $("#formularioMarca").serialize(), // Adjuntar los campos del formulario enviado.
-                           success: function(data)
-                           {
-                              
-                               $(".exito").html("<h2 id='texto'>Marca añadida correctamente!</h2>");
-                               $("#texto").fadeOut(2000); 
-                               $('#nuevaMarca').modal('toggle');
-
-                           }
-                         });
-
-                    return false; // Evitar ejecutar el submit del formulario.
-                 });
-
-                });
-            </script>
 
 
             <!-- Modal -->
@@ -182,7 +156,7 @@
                 <h4 class="modal-title">Añadir marcas</h4>
               </div>
               <div class="modal-body">
-                  <form method="post" id="formularioMarca" >
+                  <form method="post" id="formularioMarca" novalidate="">
                     <div class="form-group">
                         <label>Nadador</label>
                         <select id='nadador' name='nadador' class="form-control">
@@ -266,93 +240,25 @@
             </div>
           </div>
         </div>
+        <script>
+        $("#formularioMarca").validate({
+            onkeyup:false,
+            onfocusout:false,
+            onclick:false,
+            rules:{
+                marca:{
+                    required:true,
+                    pattern: /^\d{2}:\d{2}.\d{2}$/
+                }
+            },
+            messages:{
+                marca:"Escribe un formato valido 00:00.00"
+            }
+        });
+        </script>
 
 <br /><br /><br />
 
-<script>
-
-//var respuestas=$.ajax('cargarDatatable.php');
-$(document).ready(function() {
-    var table =$('#usuarios').DataTable( {
-        'ajax':{'url':'Consultas/cargarDatatable.php'
-                
-        },
-        "columns": [
-            { "data": "idTiempo" },
-            { "data": "usuario" },
-            { "data": "prueba" },
-            { "data": "tiempo" },
-            { "data": "fecha" },
-            { "data": "tipoPiscina" },
-            { "data": "piscina" }
-
-        ],
-        "columnDefs": [{
-        "targets": 7,
-        "data": "boton",
-        "render":function (data) { 
-                return '<button class="btn-danger" id="borrar" name="borrar">Eliminar</button>';
-        }
-
-        },
-        {
-           "targets": [ 0 ],
-           "visible": false,
-           "searchable": false
-        }
-        ],
-        
-        "language": {
-            "sProcessing":     "Procesando...",
-            "sLengthMenu":     "Mostrar _MENU_ registros",
-            "sZeroRecords":    "No se encontraron resultados",
-            "sEmptyTable":     "Ningún dato disponible en esta tabla",
-            "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-            "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
-            "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
-            "sInfoPostFix":    "",
-            "sSearch":         "Buscar:",
-            "sUrl":            "",
-            "sInfoThousands":  ",",
-            "sLoadingRecords": "Cargando...",
-            "oPaginate": {
-                "sFirst":    "Primero",
-                "sLast":     "Último",
-                "sNext":     "Siguiente",
-                "sPrevious": "Anterior"
-            },
-            "oAria": {
-                "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-            }
-        }
-    } );
-    
-    $("#usuarios").on("click", "#borrar", function(e){
-        tabla = $("#usuarios").DataTable();
-        e.preventDefault();
-        var nRow = $(this).parents('tr')[0];
-                
-        aData= tabla.row( nRow ).data();
-
-        var idTiempo1=aData.idTiempo;
-        
-        $.ajax({
-            type: "POST",
-            dataType: "json",
-            url: "Consultas/eliminarMarca.php",
-            data: { idTiempo: idTiempo1 },        
-            success: function(data) {
-                //$('#usuarios').fnDraw();
-                //$('#usuarios').DataTable().draw();
-                
-            } 
-        });
-    });
-} );
-
-
-</script>
 <table id="usuarios" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
@@ -368,9 +274,6 @@ $(document).ready(function() {
         </thead>
 
     </table>
-
-
-
       </div>
     </body>
 

@@ -54,6 +54,6 @@ $consulta->execute();
 
 
 //die;
-header('Location: ../editarMarcas.php');
+header('Location: ../usuarios.php');
 ?>
 
